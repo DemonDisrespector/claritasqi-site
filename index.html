@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ClaritasQI — AI-Assisted Hospital Quality Measure Abstraction</title>
+  <meta name="description" content="ClaritasQI applies AI to hospital chart abstraction, scoring compliance against CMS core measures and TJC standards. A structured alternative to manual QI review for hospital departments." />
+  <meta name="keywords" content="hospital quality improvement, chart abstraction, CMS core measures, SEP-1, QI coordinator, QAPI, TJC compliance, AI quality improvement, peer review documentation, clinical informatics" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://claritasquality.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://claritasquality.com/" />
+  <meta property="og:title" content="ClaritasQI — AI-Assisted Hospital Quality Measure Abstraction" />
+  <meta property="og:description" content="Structured AI-driven scoring of CMS core measures and TJC standards from hospital charts." />
+  <meta property="og:site_name" content="ClaritasQI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ClaritasQI — AI-Assisted Hospital Quality Measure Abstraction" />
+  <meta name="twitter:description" content="Structured AI-driven scoring of CMS core measures and TJC standards from hospital charts." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ClaritasQI",
+    "url": "https://claritasquality.com",
+    "applicationCategory": "HealthcareApplication",
+    "description": "AI-assisted chart abstraction and quality measure scoring for hospital QI programs. Applies CMS core measures and TJC standards to uploaded chart documentation.",
+    "operatingSystem": "Web",
+    "provider": {
+      "@type": "Organization",
+      "name": "ClaritasVentures LLC",
+      "url": "https://claritasquality.com",
+      "email": "info@claritasquality.com"
+    },
+    "featureList": ["SEP-1 Sepsis Bundle scoring","CMS Core Measure compliance abstraction","TJC ORYX measure documentation","AI-assisted chart abstraction","QI committee report generation","Peer-review protected documentation framing"],
+    "audience": {"@type": "Audience","audienceType": "Hospital QI Coordinators, Hospitalists, Department Chiefs, Patient Safety Officers"}
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#f5f4f0;--bg-card:#eeede8;--ink:#1c1c1a;--ink-mid:#3d3d38;--ink-lt:#6b6b64;--rule:#d4d2ca;--blue:#1f5c9e;--blue-lt:#2d74c4;--blue-pale:#e8f0f9;--pass:#276945;--fail:#9b2d2d;--partial:#8a5c1a;--pass-bg:#edf7f1;--fail-bg:#fdf0f0;--part-bg:#fdf6ed}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 3rem;background:rgba(245,244,240,0.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+    .logo{font-family:'Source Serif 4',serif;font-size:1.35rem;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:-0.01em}
+    .logo em{font-style:normal;color:var(--blue)}
+    .nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}
+    .nav-links a{color:var(--ink-lt);text-decoration:none;font-size:0.83rem;font-weight:400;transition:color 0.2s}
+    .nav-links a:hover{color:var(--ink)}
+    .signin-btn{display:inline-block;padding:0.5rem 1.25rem;border-radius:5px;font-weight:500;font-size:0.85rem;text-decoration:none;background:var(--blue);color:#fff;transition:background 0.2s}
+    .signin-btn:hover{background:var(--blue-lt)}
+    .hero{padding:9rem 3rem 5rem;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+    .hero-kicker{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin-bottom:1.25rem}
+    .hero h1{font-family:'Source Serif 4',serif;font-size:clamp(2rem,3.5vw,2.9rem);font-weight:400;color:var(--ink);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1.5rem}
+    .hero-rule{width:36px;height:2px;background:var(--blue);margin-bottom:1.5rem}
+    .hero p{font-size:1rem;color:var(--ink-mid);font-weight:300;line-height:1.8;max-width:440px}
+    .scorecard{background:#fff;border:1px solid var(--rule);border-radius:10px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.07)}
+    .sc-topbar{background:var(--ink);color:rgba(255,255,255,0.6);padding:0.7rem 1.25rem;font-family:'JetBrains Mono',monospace;font-size:0.67rem;letter-spacing:0.06em;display:flex;justify-content:space-between;align-items:center}
+    .sc-topbar strong{color:#fff}
+    .sc-body{padding:1.25rem}
+    .sc-section{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-lt);margin-bottom:0.6rem;padding-bottom:0.4rem;border-bottom:1px solid var(--rule)}
+    .sc-row{display:flex;align-items:flex-start;gap:0.75rem;padding:0.55rem 0;border-bottom:1px solid #f0efe9;font-size:0.8rem}
+    .sc-row:last-child{border-bottom:none}
+    .sc-verdict{font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:500;padding:0.18rem 0.5rem;border-radius:3px;min-width:50px;text-align:center;flex-shrink:0;margin-top:1px}
+    .v-pass{background:var(--pass-bg);color:var(--pass)}
+    .v-fail{background:var(--fail-bg);color:var(--fail)}
+    .v-part{background:var(--part-bg);color:var(--partial)}
+    .sc-text{flex:1;color:var(--ink-mid);line-height:1.5}
+    .sc-text small{display:block;color:var(--ink-lt);font-size:0.71rem;margin-top:0.15rem;font-style:italic}
+    .sc-footer{background:var(--bg-card);border-top:1px solid var(--rule);padding:0.75rem 1.25rem;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--ink-lt)}
+    .sc-footer strong{color:var(--ink)}
+    .sc-bar-wrap{display:flex;align-items:center;gap:0.6rem}
+    .sc-bar{width:80px;height:5px;background:var(--rule);border-radius:100px;overflow:hidden}
+    .sc-bar-fill{height:100%;background:var(--blue);border-radius:100px;animation:barGrow 1.4s 0.6s ease-out both}
+    @keyframes barGrow{from{width:0}to{width:80%}}
+    .section{padding:5rem 3rem;border-top:1px solid var(--rule)}
+    .section-inner{max-width:1100px;margin:0 auto}
+    .section-kicker{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin-bottom:0.75rem}
+    .section h2{font-family:'Source Serif 4',serif;font-size:clamp(1.6rem,2.5vw,2.1rem);font-weight:400;color:var(--ink);line-height:1.25;letter-spacing:-0.02em;margin-bottom:1rem}
+    .section-desc{font-size:0.95rem;color:var(--ink-mid);font-weight:300;max-width:660px;line-height:1.8;margin-bottom:3rem}
+    .method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+    .method-cell{background:#fff;padding:2rem}
+    .method-num{font-family:'Source Serif 4',serif;font-size:2.5rem;font-weight:300;color:var(--rule);line-height:1;margin-bottom:1rem}
+    .method-cell h3{font-family:'Source Serif 4',serif;font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:0.6rem}
+    .method-cell p{font-size:0.85rem;color:var(--ink-lt);line-height:1.7}
+    .comparison-section{padding:5rem 3rem;border-top:1px solid var(--rule);background:#fff}
+    .comparison-inner{max-width:1100px;margin:0 auto}
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem}
+    .compare-col{border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+    .compare-col-head{padding:0.9rem 1.25rem;font-size:0.82rem;font-weight:500;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:0.5rem}
+    .col-head-traditional{background:var(--bg-card);color:var(--ink-mid)}
+    .col-head-claritas{background:var(--blue-pale);color:var(--blue)}
+    .compare-item{padding:0.85rem 1.25rem;border-bottom:1px solid #f2f1ec;font-size:0.84rem;display:flex;align-items:flex-start;gap:0.6rem}
+    .compare-item:last-child{border-bottom:none}
+    .compare-item.traditional{color:var(--ink-mid)}
+    .compare-item.claritas{color:var(--ink)}
+    .ci-marker{font-size:0.7rem;margin-top:2px;flex-shrink:0}
+    .measures-section{padding:5rem 3rem;border-top:1px solid var(--rule)}
+    .measures-inner{max-width:1100px;margin:0 auto}
+    .measure-table{width:100%;border-collapse:collapse;margin-top:2rem}
+    .measure-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:0.64rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-lt);padding:0.6rem 1rem;border-bottom:2px solid var(--rule);font-weight:500}
+    .measure-table td{padding:0.85rem 1rem;font-size:0.84rem;border-bottom:1px solid #eeede8;vertical-align:top}
+    .measure-table tr:hover td{background:#fafaf7}
+    .measure-name{color:var(--ink);font-weight:500}
+    .measure-std{color:var(--ink-lt);font-size:0.78rem}
+    .measure-checks{color:var(--ink-mid);font-size:0.8rem;line-height:1.5}
+    .phase-chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.05em;padding:0.15rem 0.5rem;border-radius:3px;font-weight:500}
+    .chip-1{background:var(--blue-pale);color:var(--blue)}
+    .chip-2{background:#fdf6ed;color:var(--partial)}
+    .chip-3{background:var(--bg-card);color:var(--ink-lt)}
+    .framing-section{padding:5rem 3rem;border-top:1px solid var(--rule);background:#fff}
+    .framing-inner{max-width:1100px;margin:0 auto}
+    .framing-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:2.5rem}
+    .framing-text p{font-size:0.9rem;color:var(--ink-mid);line-height:1.8;margin-bottom:1rem}
+    .framing-text p:last-child{margin-bottom:0}
+    .language-table{width:100%;border-collapse:collapse}
+    .language-table th{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-lt);padding:0.5rem 0.75rem;border-bottom:1px solid var(--rule);text-align:left;font-weight:500}
+    .language-table td{padding:0.7rem 0.75rem;font-size:0.81rem;border-bottom:1px solid #f2f1ec;vertical-align:top}
+    .language-table .dim{color:var(--ink-lt)}
+    .language-table .qi-framing{color:var(--blue)}
+    .language-table .context{color:var(--ink-mid)}
+    .access-section{padding:5rem 3rem;border-top:1px solid var(--rule);text-align:center}
+    .access-inner{max-width:500px;margin:0 auto}
+    .access-section h2{font-family:'Source Serif 4',serif;font-size:1.75rem;font-weight:400;color:var(--ink);margin-bottom:1rem;letter-spacing:-0.02em}
+    .access-section p{font-size:0.9rem;color:var(--ink-lt);margin-bottom:2rem;line-height:1.75}
+    .signin-btn-lg{display:inline-block;padding:0.8rem 2rem;background:var(--blue);color:#fff;border-radius:5px;font-weight:500;font-size:0.95rem;text-decoration:none;transition:background 0.2s}
+    .signin-btn-lg:hover{background:var(--blue-lt)}
+    .access-contact{margin-top:1.5rem;font-size:0.8rem;color:var(--ink-lt)}
+    .access-contact a{color:var(--blue);text-decoration:none}
+    .access-contact a:hover{text-decoration:underline}
+    footer{border-top:1px solid var(--rule);padding:2rem 3rem}
+    .footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .footer-logo{font-family:'Source Serif 4',serif;font-size:1.05rem;font-weight:600;color:var(--ink)}
+    .footer-logo em{font-style:normal;color:var(--blue)}
+    .footer-links{display:flex;gap:2rem;list-style:none}
+    .footer-links a{font-size:0.8rem;color:var(--ink-lt);text-decoration:none;transition:color 0.2s}
+    .footer-links a:hover{color:var(--ink)}
+    .footer-copy{font-size:0.75rem;color:var(--ink-lt);opacity:0.55}
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity 0.55s ease,transform 0.55s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:860px){
+      nav{padding:1rem 1.5rem}
+      .nav-links{display:none}
+      .hero{grid-template-columns:1fr;gap:3rem;padding:7rem 1.5rem 3rem}
+      .section,.comparison-section,.measures-section,.framing-section,.access-section{padding:3.5rem 1.5rem}
+      .method-grid{grid-template-columns:1fr}
+      .compare-grid{grid-template-columns:1fr}
+      .framing-grid{grid-template-columns:1fr;gap:2rem}
+      footer{padding:1.75rem 1.5rem}
+      .footer-inner{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Claritas<em>QI</em></a>
+  <ul class="nav-links">
+    <li><a href="#methodology">Methodology</a></li>
+    <li><a href="#comparison">vs. Manual Review</a></li>
+    <li><a href="#measures">Measure Library</a></li>
+    <li><a href="#framing">Output Framing</a></li>
+    <li><a href="mailto:info@claritasquality.com">Contact</a></li>
+  </ul>
+  <a href="https://claritasparsing.com/qi" class="signin-btn">Sign In</a>
+</nav>
+
+<header class="hero">
+  <div>
+    <div class="hero-kicker">Hospital Quality Improvement · AI-Assisted Abstraction</div>
+    <h1>Structured measure scoring from hospital chart documentation.</h1>
+    <div class="hero-rule"></div>
+    <p>ClaritasQI applies a large language model to uploaded chart PDFs, evaluating each applicable quality measure against defined CMS and TJC criteria. Output is a structured compliance scorecard — not a narrative summary — with a verdict, rationale, and supporting chart citation for each measure element.</p>
+  </div>
+
+  <div class="scorecard" role="img" aria-label="Example ClaritasQI output: SEP-1 Sepsis Bundle scorecard">
+    <div class="sc-topbar">
+      <span><strong>ClaritasQI</strong> &nbsp;·&nbsp; SEP-1 Sepsis Bundle</span>
+      <span>Case #2024-0447</span>
+    </div>
+    <div class="sc-body">
+      <div class="sc-section">3-Hour Bundle Elements</div>
+      <div class="sc-row">
+        <div class="sc-verdict v-pass">PASS</div>
+        <div class="sc-text">Lactate measurement<small>Documented 14:32 — result 3.2 mmol/L</small></div>
+      </div>
+      <div class="sc-row">
+        <div class="sc-verdict v-pass">PASS</div>
+        <div class="sc-text">Blood cultures before antibiotics<small>Cultures 14:35 / antibiotics 14:58</small></div>
+      </div>
+      <div class="sc-row">
+        <div class="sc-verdict v-pass">PASS</div>
+        <div class="sc-text">Broad-spectrum antibiotic administration<small>Pip-tazo 4.5g IV — within bundle window</small></div>
+      </div>
+      <div class="sc-row">
+        <div class="sc-verdict v-fail">FAIL</div>
+        <div class="sc-text">30 mL/kg crystalloid within 3 hours<small>Documentation supports 18 mL/kg — threshold not met</small></div>
+      </div>
+      <div class="sc-row">
+        <div class="sc-verdict v-pass">PASS</div>
+        <div class="sc-text">Sepsis screen within 1 hour of arrival<small>Triage flag documented 14:15</small></div>
+      </div>
+    </div>
+    <div class="sc-footer">
+      <span>Bundle compliance: <strong>4 of 5 elements met</strong></span>
+      <div class="sc-bar-wrap">
+        <div class="sc-bar"><div class="sc-bar-fill" style="width:80%"></div></div>
+        <strong>80%</strong>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="methodology">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-kicker">Methodology</div>
+      <h2>How the abstraction process works.</h2>
+      <p class="section-desc">ClaritasQI follows a structured, measure-driven evaluation sequence. For each applicable quality measure, the model is given the measure definition, inclusion and exclusion criteria, and the relevant chart content. It returns a verdict — PASS, FAIL, PARTIAL, or N/A — with a one-sentence rationale and the specific chart text that supports its finding. The process mirrors the logic of manual abstraction but applies it consistently across every uploaded record.</p>
+    </div>
+    <div class="method-grid reveal">
+      <div class="method-cell">
+        <div class="method-num">01</div>
+        <h3>Chart Ingestion</h3>
+        <p>Hospital chart PDFs are uploaded through a secure, HIPAA-compliant interface. The system extracts and parses structured and unstructured text — physician orders, nursing notes, laboratory results, vital signs, and discharge documentation.</p>
+      </div>
+      <div class="method-cell">
+        <div class="method-num">02</div>
+        <h3>Measure Evaluation</h3>
+        <p>The model applies each relevant measure definition — drawn from CMS Core Measure specifications and TJC ORYX standards — against the extracted chart content. Each measure element is evaluated independently against its defined threshold and inclusion criteria.</p>
+      </div>
+      <div class="method-cell">
+        <div class="method-num">03</div>
+        <h3>Structured Output</h3>
+        <p>Results are returned as a scorecard: a verdict for each measure element, a brief rationale citing the relevant chart finding, and an overall bundle or module compliance rate. Output is formatted for QI committee review and peer-review program documentation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="comparison-section" id="comparison">
+  <div class="comparison-inner">
+    <div class="reveal">
+      <div class="section-kicker">Traditional vs. AI-Assisted Abstraction</div>
+      <h2>Where the approach differs from conventional QI review.</h2>
+      <p class="section-desc">Manual chart abstraction is the current standard for most hospital QI programs. The following describes how ClaritasQI differs in practice — not as a replacement for clinical judgment, but as a structural alternative to the abstraction step itself.</p>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-col">
+        <div class="compare-col-head col-head-traditional">Traditional Manual Abstraction</div>
+        <div class="compare-item traditional"><span class="ci-marker">—</span><span>A trained abstractor reviews the chart and applies each measure criterion based on clinical knowledge and documentation review. Typically 30–60 minutes per chart.</span></div>
+        <div class="compare-item traditional"><span class="ci-marker">—</span><span>Measure application is subject to inter-rater variability — different abstractors may interpret the same documentation differently against a given criterion.</span></div>
+        <div class="compare-item traditional"><span class="ci-marker">—</span><span>Volume constraints typically require sampling. Comprehensive review of all applicable cases is rarely feasible for most QI programs.</span></div>
+        <div class="compare-item traditional"><span class="ci-marker">—</span><span>Findings are recorded in spreadsheets or EHR-based forms. Aggregation and trend analysis require additional manual steps.</span></div>
+        <div class="compare-item traditional"><span class="ci-marker">—</span><span>Chart citations supporting each abstraction decision are not always systematically recorded alongside the verdict.</span></div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-col-head col-head-claritas">ClaritasQI AI-Assisted Abstraction</div>
+        <div class="compare-item claritas"><span class="ci-marker" style="color:var(--blue)">→</span><span>The model applies each measure criterion to extracted chart text. Processing time per chart is minutes rather than hours, allowing broader case coverage within the same QI program.</span></div>
+        <div class="compare-item claritas"><span class="ci-marker" style="color:var(--blue)">→</span><span>Measure definitions and thresholds are applied from the same specification text on every evaluation, reducing criterion-level variability across cases and abstractors.</span></div>
+        <div class="compare-item claritas"><span class="ci-marker" style="color:var(--blue)">→</span><span>All uploaded cases are evaluated. Batch mode supports comprehensive review of a case population rather than a sampled subset, suitable for aggregate QAPI reporting.</span></div>
+        <div class="compare-item claritas"><span class="ci-marker" style="color:var(--blue)">→</span><span>Scorecards are generated in structured format. Aggregate compliance rates and trend data are computed automatically and exportable as PDF or Word for committee submission.</span></div>
+        <div class="compare-item claritas"><span class="ci-marker" style="color:var(--blue)">→</span><span>Each verdict includes the specific chart text that supports or contradicts the measure criterion, making the abstraction decision transparent and reviewable by a clinician.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="measures-section" id="measures">
+  <div class="measures-inner">
+    <div class="reveal">
+      <div class="section-kicker">Measure Library</div>
+      <h2>Supported quality modules.</h2>
+      <p class="section-desc">Each module maps to a defined regulatory standard. Phase 1 modules are available at launch; Phase 2 and 3 modules are in development and will be added in subsequent releases.</p>
+    </div>
+    <table class="measure-table reveal" aria-label="ClaritasQI supported quality measure modules">
+      <thead>
+        <tr>
+          <th>Module</th>
+          <th>Regulatory standard</th>
+          <th>Key elements evaluated</th>
+          <th>Phase</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="measure-name">SEP-1 Sepsis Bundle</span></td><td><span class="measure-std">CMS Core Measure SEP-1</span></td><td class="measure-checks">3-hr bundle, 6-hr bundle, lactate, blood cultures, antibiotics, fluids, vasopressors, repeat lactate</td><td><span class="phase-chip chip-1">Phase 1</span></td></tr>
+        <tr><td><span class="measure-name">ACS / STEMI</span></td><td><span class="measure-std">CMS OP-2/OP-3, ACC/AHA</span></td><td class="measure-checks">Aspirin on arrival and discharge, statin, door-to-balloon time, reperfusion strategy documentation</td><td><span class="phase-chip chip-1">Phase 1</span></td></tr>
+        <tr><td><span class="measure-name">Stroke</span></td><td><span class="measure-std">CMS STK-1 through STK-10</span></td><td class="measure-checks">tPA eligibility and administration, DVT prophylaxis, antithrombotic therapy, rehabilitation assessment, smoking cessation counseling</td><td><span class="phase-chip chip-1">Phase 1</span></td></tr>
+        <tr><td><span class="measure-name">VTE Prevention</span></td><td><span class="measure-std">CMS VTE-1 through VTE-6</span></td><td class="measure-checks">Prophylaxis ordered and administered, ICU VTE prophylaxis compliance, discharge instructions</td><td><span class="phase-chip chip-1">Phase 1</span></td></tr>
+        <tr><td><span class="measure-name">Pneumonia / CAP</span></td><td><span class="measure-std">CMS PN-6, IDSA/ATS guidelines</span></td><td class="measure-checks">Blood cultures before antibiotic administration, appropriate antibiotic selection, time-to-first-dose</td><td><span class="phase-chip chip-2">Phase 2</span></td></tr>
+        <tr><td><span class="measure-name">Heart Failure</span></td><td><span class="measure-std">CMS HF-1 through HF-3</span></td><td class="measure-checks">LVEF assessment, discharge instructions completeness, ACEI/ARB at discharge</td><td><span class="phase-chip chip-2">Phase 2</span></td></tr>
+        <tr><td><span class="measure-name">Perinatal Safety</span></td><td><span class="measure-std">TJC PC measures, ACOG</span></td><td class="measure-checks">Elective delivery before 39 weeks, cesarean rate documentation, hemorrhage protocol adherence</td><td><span class="phase-chip chip-2">Phase 2</span></td></tr>
+        <tr><td><span class="measure-name">Surgical Care (SCIP)</span></td><td><span class="measure-std">CMS SCIP / TJC</span></td><td class="measure-checks">Prophylactic antibiotic timing, selection, and discontinuation; VTE prophylaxis; normothermia; glucose control</td><td><span class="phase-chip chip-2">Phase 2</span></td></tr>
+        <tr><td><span class="measure-name">Pressure Injury</span></td><td><span class="measure-std">NDNQI, AHRQ NQF #0201</span></td><td class="measure-checks">Hospital-acquired Stage 3/4 PI, prevention protocol adherence, repositioning documentation</td><td><span class="phase-chip chip-2">Phase 2</span></td></tr>
+        <tr><td><span class="measure-name">Medication Reconciliation</span></td><td><span class="measure-std">TJC NPSG.03.06.01</span></td><td class="measure-checks">Reconciliation on admission, transfer, and discharge; high-alert medication documentation</td><td><span class="phase-chip chip-3">Phase 3</span></td></tr>
+        <tr><td><span class="measure-name">Fall Prevention</span></td><td><span class="measure-std">TJC NPSG.09.02.01</span></td><td class="measure-checks">Risk assessment performed, intervention implemented, post-fall review documentation</td><td><span class="phase-chip chip-3">Phase 3</span></td></tr>
+        <tr><td><span class="measure-name">Restraint Use</span></td><td><span class="measure-std">CMS CoP 42 CFR §482.13</span></td><td class="measure-checks">Order compliance, monitoring frequency, 1-hour face-to-face, least restrictive alternative documentation</td><td><span class="phase-chip chip-3">Phase 3</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="framing-section" id="framing">
+  <div class="framing-inner">
+    <div class="reveal">
+      <div class="section-kicker">Output Framing</div>
+      <h2>Documentation designed for QI program use.</h2>
+    </div>
+    <div class="framing-grid">
+      <div class="framing-text reveal">
+        <p>Hospital QI departments operate under peer review protections — Texas Health &amp; Safety Code §161 and equivalent statutes in other states. The framing of QI documentation matters for how those protections apply.</p>
+        <p>ClaritasQI output uses compliance-oriented language throughout: measures are met or not met, variances are noted as improvement opportunities, and findings are framed as QI committee action items. The platform does not use language associated with litigation support tools — no deviations, no critical gaps, no breach findings.</p>
+        <p>This distinction is intentional. The output language is written to support classification of ClaritasQI records as peer review program documentation, consistent with the framing hospital counsel and QI committees expect.</p>
+      </div>
+      <div class="reveal" style="transition-delay:0.1s">
+        <table class="language-table" aria-label="Output language comparison between litigation framing and ClaritasQI QI framing">
+          <thead>
+            <tr>
+              <th>Situation</th>
+              <th>Litigation-framed language</th>
+              <th>ClaritasQI framing</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="context">Missing documentation</td><td class="dim">Critical gap identified</td><td class="qi-framing">Improvement opportunity noted</td></tr>
+            <tr><td class="context">Protocol difference</td><td class="dim">Deviation from standard</td><td class="qi-framing">Protocol variance documented</td></tr>
+            <tr><td class="context">Criterion not met</td><td class="dim">Breach of standard</td><td class="qi-framing">Measure not met</td></tr>
+            <tr><td class="context">Reviewer action</td><td class="dim">Flagged for litigation review</td><td class="qi-framing">QI committee action item</td></tr>
+            <tr><td class="context">Output document type</td><td class="dim">Expert report</td><td class="qi-framing">QI program scorecard</td></tr>
+            <tr><td class="context">Regulatory reference</td><td class="dim">Chapter 74 / malpractice</td><td class="qi-framing">CMS / TJC / QAPI</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="access-section">
+  <div class="access-inner reveal">
+    <h2>Platform access</h2>
+    <p>ClaritasQI is a credentialed, access-gated platform. Sign in with your issued credentials, or contact us to discuss access for your department or QI program.</p>
+    <a href="https://claritasparsing.com/qi" class="signin-btn-lg">Sign In</a>
+    <div class="access-contact">
+      For access inquiries: <a href="mailto:info@claritasquality.com">info@claritasquality.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Claritas<em>QI</em></div>
+    <ul class="footer-links">
+      <li><a href="#methodology">Methodology</a></li>
+      <li><a href="#measures">Measure Library</a></li>
+      <li><a href="#framing">Output Framing</a></li>
+      <li><a href="mailto:info@claritasquality.com">Contact</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 ClaritasVentures LLC &nbsp;·&nbsp; claritasquality.com</div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
